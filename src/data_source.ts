@@ -10,6 +10,9 @@ export const AppDataSource = new DataSource({
   type: "cockroachdb",
   url: dbUrl.toString(),
   ssl: true,
+  synchronize:true,
+  entities:[
+    "src/entities/**/*.ts"],
   extra: {
     options: routingId
   },

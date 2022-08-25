@@ -6,6 +6,8 @@ jspm_packages/
 *.tsbuildinfo
 
 
+#dist
+/dist
 
 # dotenv environment variable files
 .env
