@@ -1,9 +1,11 @@
 import "reflect-metadata";
+import 'dotenv/config'
 import express, { Application } from "express";
 import cors from "cors";
 import routes from "./routes/indexRoute";
 import helmet from "helmet";
-import 'dotenv/config'
+import { AppDataSource } from "./data_source";
+
 
 class Server {
   public app: Application;
@@ -38,6 +40,14 @@ class Server {
     this.app.listen(this.app.get("port"), () => {
       console.log(`Server on port`, this.app.get("port"));
     });
+  }
+
+  database():void{
+    AppDataSource.initialize()
+    .then((res) => {
+       console.log('db connected');
+    })
+    .catch((error) => console.log(error))
   }
 }
 
