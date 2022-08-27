@@ -9,18 +9,15 @@ export class Organization {
   @PrimaryGeneratedColumn()
   id_organization: number;
 
-  @OneToMany(()=>Tribe,tribe=>tribe.organization)
+  @OneToMany(()=>Tribe,tribe=>tribe.organization,{nullable:false})
   tribes:Tribe[];
   
 
-  @Column()
-  @Length(50)
+  @Column({nullable:false})
+  @MaxLength(50)
   name: string;
 
-  @Column()
+  @Column({nullable:false,default:1})
   status: number;
-
-
-  
 
 }

@@ -4,27 +4,29 @@ import { Repository } from './Repository';
 
 
 @Entity()
-@Unique(["id_repository"])
-export class Metrics {
+@Unique(["id_metric"])
+export class Metric {
   @PrimaryGeneratedColumn()
+  id_metric: number;
+
   @OneToOne(()=>Repository)
   @JoinColumn()
-  id_repository: Repository;
+  repository:Repository
 
-  @Column({type:"decimal",precision:2,scale:2})
+  @Column({type:"decimal",precision:10,scale:2,nullable:false})
   @Max(100)
   coverage: number;
 
-  @Column()
+  @Column({nullable:false})
   bugs: number;
 
-  @Column()
+  @Column({nullable:false})
   vulnerabilities: number;
 
-  @Column()
+  @Column({nullable:false})
   hotspot: number;
 
-  @Column()
+  @Column({nullable:false})
   code_smells: number;
 
 }
