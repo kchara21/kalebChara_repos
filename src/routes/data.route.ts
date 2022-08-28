@@ -16,7 +16,6 @@ router.post("/repositories", DataController.createRepository);
 //Create tribu
 router.post("/metrics", DataController.createMetric);
 
-//Create organization
-router.get("/watchAll", DataController.watchAll);
+
 
 export default router;
