@@ -8,7 +8,7 @@ router.get('/:id/repositories',RepositoryController.getRepositoriesByTribe);
 
 
 
-// router.get('/:id/repositories/export',RepositoryController.exportRepositoriesByTribe);
+router.get('/:id/repositories/export',RepositoryController.exportRepositoriesByTribe);
 
 
 
