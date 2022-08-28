@@ -7,7 +7,7 @@ import { Repository } from "typeorm";
 export class OrganizationController {
   static getAll = async (req: Request, res: Response) => {
     const userRepository = AppDataSource.getRepository(Organization);
-    let organizations: Organization[];
+    let organizations: Organization[] = [];
     try {
       organizations = await userRepository.find({ where: { status: 1 } });
     } catch (e) {
