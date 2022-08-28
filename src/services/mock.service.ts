@@ -9,23 +9,24 @@ interface RespositoryMock {
 
 export default class RepositoryMockService {
   static verificationState = async (req: Request, res: Response) => {
-    let stateCode: number = 603;
     const repoDataSource = AppDataSource.getRepository(Repository);
     let repos: Repository[] = [];
     let repositories: RespositoryMock[] = [];
+    let stateCode: number = 603;
 
     try {
       repos = await repoDataSource.find({ where: { status: "A" } });
     } catch (e) {
-      res.status(404).json({ message: "Something goes wrong!" });
+      res.status(400).json({ message: "Something goes wrong!" });
     }
+
+    if (repos.length < 1)
+      res.status(404).json({ message: "Dont exits repositories" });
 
     for (const repo of repos) {
       stateCode++;
       repositories.push({ id: repo.id_repository, state: stateCode });
-      if (stateCode > 605) {
-        stateCode = 603;
-      }
+      if (stateCode > 605) stateCode = 603;
     }
 
     return repositories;

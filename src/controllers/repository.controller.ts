@@ -3,9 +3,9 @@ import { Request, Response } from "express";
 import { Metric } from "../entities/Metric";
 import moment from "moment";
 import RepositoryMockService from "../services/mock.service";
+import { Repository_Interface } from "../interface/repository.interface";
 
 export class RepositoryController {
-  
   static resolveVerificationCode = (code: string) => {
     const verificationState: any = {
       E: "Enabled",
@@ -17,14 +17,13 @@ export class RepositoryController {
   };
 
   static getRepositoriesByTribe = async (req: Request, res: Response) => {
-    const { id } = req.params;
-
     let metricsExist: Metric[];
-    let repositoryArray: Object[] = [];
+    let repositoryArray: Repository_Interface[] = [];
 
     try {
       const currentDate = moment().year() + "-01-01  00:00:00.000";
       const metricRepository = AppDataSource.getRepository(Metric);
+      const { id } = req.params;
 
       metricsExist = await metricRepository
         .createQueryBuilder("metric")
@@ -47,31 +46,31 @@ export class RepositoryController {
         .json({ message: "La Tribu no se encuentra registrada" });
     }
 
-    const metricsCoverageExist = metricsExist.filter(
+    const metricsCoverage = metricsExist.filter(
       (metric) => metric.coverage > 75
     );
 
-    if (metricsCoverageExist.length < 1) {
+    if (metricsCoverage.length < 1) {
       return res.status(404).json({
         message:
           "La Tribu no tiene repositorios que cumplan con la cobertura necesaria",
       });
     }
 
-    for (const metric of metricsCoverageExist) {
-      const repositoryState = await RepositoryMockService.verificationState(
+    for (const metric of metricsCoverage) {
+      const repositoriesState = await RepositoryMockService.verificationState(
         req,
         res
       );
 
-      const stateEntity = repositoryState.find(
+      const stateEntity = repositoriesState.find(
         (item) => item.id === metric.repository.id_repository
       );
 
       if (!stateEntity) return;
 
       const repository_verificationState =
-        RepositoryMockService.resolveVerificationCode(stateEntity.state);
+        await RepositoryMockService.resolveVerificationCode(stateEntity.state);
 
       repositoryArray.push({
         id: metric.repository.id_repository,
@@ -82,9 +81,9 @@ export class RepositoryController {
         codeSmells: metric.code_smells,
         bugs: metric.bugs,
         vulnerabilities: metric.vulnerabilities,
-        hotsposts: metric.hotspot,
+        hotspots: metric.hotspot,
         verificationState: repository_verificationState,
-        state: this.resolveVerificationCode(metric.repository.state) ,
+        state: this.resolveVerificationCode(metric.repository.state),
       });
     }
 
@@ -92,5 +91,9 @@ export class RepositoryController {
       repositories: repositoryArray,
     });
   };
+
+  static exportRepositoriesByTribe = async (req:Request,res:Response)=>{
+    
+  }
 }
 export default RepositoryController;
