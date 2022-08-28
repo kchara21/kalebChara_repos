@@ -139,7 +139,6 @@ export class DataController {
     return res.status(201).json({ message: "Metrics created" });
   };
 
-
 }
 
 export default DataController;
