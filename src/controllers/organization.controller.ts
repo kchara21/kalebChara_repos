@@ -38,7 +38,7 @@ export class OrganizationController {
         where: { name, status: 1 },
       });
       if (organizationExist.length > 0)
-        return res.json({ message: `Organization ${name} already exist` });
+        return res.json({ message: `Organization ${name} already exist!` });
 
       await organizationRepo.save(organization);
     } catch (e) {
