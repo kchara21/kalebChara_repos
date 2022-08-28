@@ -1,8 +1,10 @@
 import { Column, CreateDateColumn, Entity, Equal, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Timestamp, Unique, UpdateDateColumn } from "typeorm";
 import { Equals, IsEmail, IsNotEmpty, Length, Max, MaxLength, Min, MinLength } from "class-validator";
 import { Tribe } from './Tribe';
-import { Status, State } from '../interfaces/repository.interface';
+// import {state,status } from '../interfaces/repository.interface';
 
+export type state = "E" | "E" | "A";
+export type status = "A" | "I";
 
 @Entity()
 @Unique(["id_repository"])
@@ -18,14 +20,14 @@ export class Repository {
   @MaxLength(50)
   name: string;
 
-  @Column("json",{nullable:false})
-  state: State;
+  @Column({nullable:false})
+  state: state;
 
   @Column({nullable:false})
   @CreateDateColumn()
   create_time: Timestamp;
 
-  @Column("json",{nullable:false})
-  status: Status;
+  @Column({nullable:false})
+  status: status;
 
 }
