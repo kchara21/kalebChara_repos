@@ -64,7 +64,7 @@ export class OrganizationController {
       organization.name = name;
       organization.tribes = tribes;
     } catch (e) {
-      return res.status(404).json({ message: "Organization not found" });
+      return res.status(404).json({ message: "Organization not found!" });
     }
 
     //Validate dont exist errors
