@@ -4,7 +4,6 @@ import { Metric } from "../entities/Metric";
 import moment from "moment";
 import RepositoryMockService from "../services/mock.service";
 import { Repository_Interface } from "../interface/repository.interface";
-import * as path from "path";
 
 export class RepositoryController {
   static resolveVerificationCode = (code: string) => {

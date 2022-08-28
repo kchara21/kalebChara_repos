@@ -16,7 +16,7 @@ export class OrganizationController {
 
     organizations.length > 0
       ? res.json(organizations)
-      : res.status(404).json({ message: "Not result" });
+      : res.status(404).json({ message: "Not result information" });
   };
 
   static newOrganization = async (req: Request, res: Response) => {
