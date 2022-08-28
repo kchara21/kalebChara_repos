@@ -4,6 +4,8 @@ import { Metric } from "../entities/Metric";
 import moment from "moment";
 import RepositoryMockService from "../services/mock.service";
 import { Repository_Interface } from "../interface/repository.interface";
+import * as path from 'path';
+const csvWriter = require("csv-writer");
 
 export class RepositoryController {
   static resolveVerificationCode = (code: string) => {
@@ -92,8 +94,24 @@ export class RepositoryController {
     });
   };
 
-  static exportRepositoriesByTribe = async (req:Request,res:Response)=>{
-    
-  }
+  static exportRepositoriesByTribe = async (req: Request, res: Response) => {
+    const writer = csvWriter.createObjectCsvWriter({
+      path: path.resolve(__dirname, "repositories.csv"),
+      header: [
+        { id: "id", title: "Id" },
+        { id: "name", title: "Name" },
+        { id: "tribe", title: "Tribe" },
+        { id: "organization", title: "Organization" },
+        { id: "coverage", title: "Coverage" },
+        { id: "codeSmells", title: "Code Smells" },
+        { id: "bugs", title: "Bugs" },
+        { id: "vulnerabilities", title: "Vulnerabilities" },
+        { id: "hotspots", title: "Hotspots" },
+        { id: "verificationState", title: "Verification State" },
+        { id: "state", title: "State" },
+
+      ],
+    });
+  };
 }
 export default RepositoryController;
