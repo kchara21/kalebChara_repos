@@ -99,7 +99,7 @@ export class OrganizationController {
     }
 
     if (!organization)
-      return res.status(404).json({ message: "Organization not found" });
+      return res.status(404).json({ message: "Organization not found!" });
 
     try {
       await organizationRepo
