@@ -1,11 +1,9 @@
 import "reflect-metadata";
-import 'dotenv/config'
+import "dotenv/config";
 import express, { Application } from "express";
 import cors from "cors";
-import routes from "./routes/indexRoute";
+import routes from "./routes/index.route";
 import helmet from "helmet";
-import { AppDataSource } from "./data_source";
-
 
 class Server {
   public app: Application;
@@ -17,8 +15,6 @@ class Server {
   }
 
   config(): void {
-
- 
     this.app.set("port", process.env.PORT || 3000);
     this.app.use(cors({ credentials: true }));
     this.app.use(
@@ -33,7 +29,6 @@ class Server {
 
   routes(): void {
     this.app.use("/", routes);
-    // this.app.use(express.static('public'));
   }
 
   start(): void {
@@ -42,13 +37,6 @@ class Server {
     });
   }
 
-  database():void{
-    AppDataSource.initialize()
-    .then((res) => {
-       console.log('db connected');
-    })
-    .catch((error) => console.log(error))
-  }
 }
 
 const server = new Server();

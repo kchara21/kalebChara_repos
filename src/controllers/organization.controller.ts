@@ -1,4 +1,4 @@
-import { AppDataSource } from "../data_source";
+import { AppDataSource } from "../data.source";
 import { Request, Response } from "express";
 import { validate } from "class-validator";
 import { Organization } from "../entities/Organization";
@@ -6,9 +6,9 @@ import { Repository } from "typeorm";
 
 export class OrganizationController {
   static getAll = async (req: Request, res: Response) => {
-    const userRepository = AppDataSource.getRepository(Organization);
     let organizations: Organization[] = [];
     try {
+      const userRepository = AppDataSource.getRepository(Organization);
       organizations = await userRepository.find({ where: { status: 1 } });
     } catch (e) {
       res.status(404).json({ message: "Something goes wrong!" });
@@ -30,15 +30,14 @@ export class OrganizationController {
     const errors = await validate(organization, validationOpts);
     if (errors.length > 0) return res.status(400).json(errors);
 
-    //Create organization
-    const organizationRepo: Repository<Organization> =
-      AppDataSource.getRepository(Organization);
-
     try {
+      //Create organization
+      const organizationRepo: Repository<Organization> =
+        AppDataSource.getRepository(Organization);
       const organizationExist: Organization[] = await organizationRepo.find({
         where: { name, status: 1 },
       });
-      if (organizationExist.length>0)
+      if (organizationExist.length > 0)
         return res.json({ message: `Organization ${name} already exist` });
 
       await organizationRepo.save(organization);

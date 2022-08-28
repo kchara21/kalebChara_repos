@@ -1,4 +1,4 @@
-import { AppDataSource } from "../data_source";
+import { AppDataSource } from "../data.source";
 import { NextFunction, Request, Response } from "express";
 import { validate } from "class-validator";
 import { Organization } from "../entities/Organization";
@@ -7,7 +7,11 @@ import { Repository as Repo } from "../entities/Repository";
 import { Metric } from "../entities/Metric";
 import { Tribe } from "../entities/Tribe";
 
-export class LoadData {
+
+
+
+
+export class DataController {
   static createOrganization = async (req: Request, res: Response) => {
     for (let i = 0; i < 2; i++) {
       const organization = new Organization();
@@ -140,23 +144,7 @@ export class LoadData {
 
 
   static watchAll = async (req: Request, res: Response) => {
-    // const userRepository = AppDataSource.getRepository(Organization);
-
-    // let organizations: Organization[];
-    // try {
-    //   organizations = await userRepository.find({
-    //     relations: ["tribes", "tribes.repositories"],
-    //   });
-    // } catch (e) {
-    //   res.status(404).json({ message: "Something goes wrong!" });
-    // }
-
-    // console.log(organizations);
-    // organizations.length > 0
-    //   ? res.json(organizations)
-    //   : res.status(404).json({ message: "Not result" });
-
-
+   
       const metricRepositoriy = AppDataSource.getRepository(Metric);
       let metrics: Metric[];
       try {
@@ -170,12 +158,7 @@ export class LoadData {
       ? res.json(metrics)
       : res.status(404).json({ message: "Not result" });
 
-
-
-
-
-
   };
 }
 
-export default LoadData;
+export default DataController;

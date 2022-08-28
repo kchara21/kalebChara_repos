@@ -1,18 +1,18 @@
-import { AppDataSource } from "../data_source";
+import { AppDataSource } from "../data.source";
 import { Repository } from "../entities/Repository";
 import { request, Request, response, Response } from "express";
 
-interface Res {
+interface RespositoryMock {
   id: number;
-  state:number;
+  state: number;
 }
 
-export default class MockService {
+export default class RepositoryMockService {
   static verificationState = async (req: Request, res: Response) => {
     let stateCode: number = 603;
     const repoDataSource = AppDataSource.getRepository(Repository);
     let repos: Repository[] = [];
-    let repositories: Res[] = [];
+    let repositories: RespositoryMock[] = [];
 
     try {
       repos = await repoDataSource.find({ where: { status: "A" } });

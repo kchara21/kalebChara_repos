@@ -6,6 +6,9 @@ import { Tribe } from './Tribe';
 export type state = "E" | "E" | "A";
 export type status = "A" | "I";
 
+
+
+
 @Entity()
 @Unique(["id_repository"])
 export class Repository {
