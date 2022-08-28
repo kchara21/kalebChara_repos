@@ -107,7 +107,6 @@ export class RepositoryController {
       fastcsv
       .write(repositories, { headers: true })
       .pipe(ws)
-      .createReadStream("../reports");
     }catch(e){
       return res.status(400).json({ message: e });
     }

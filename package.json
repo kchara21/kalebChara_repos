@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "set debug=* && ts-node-dev --respawn --transpile-only ./src/index.ts",
     "tsc": "tsc",
-    "test": "jest"
+    "test": "set NODE_OPTIONS=--experimental-vm-modules && jest"
   },
   "jest": {
     "preset": "ts-jest",
@@ -14,7 +14,7 @@
     "collectCoverage": true,
     "coveragePathIgnorePatterns": [
       "/node_modules/",
-      "/tetst/",
+      "/test/",
       "/dist/"
     ]
   },
