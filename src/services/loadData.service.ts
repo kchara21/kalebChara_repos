@@ -4,7 +4,6 @@ import { validate } from "class-validator";
 import { Organization } from "../entities/Organization";
 import { Repository } from "typeorm";
 import { Repository as Repo } from "../entities/Repository";
-import { State, state } from "../interfaces/repository.interface";
 import { Metric } from "../entities/Metric";
 import { Tribe } from "../entities/Tribe";
 
@@ -79,8 +78,8 @@ export class LoadData {
       let repository = new Repo();
 
       repository.name = `repo_nttdata${i + 1}`;
-      repository.state = { state: "E" };
-      repository.status = { status: "A" };
+      repository.state = "E";
+      repository.status = "A";
       repository.tribe = tribe;
 
       // VALIDATE
@@ -141,21 +140,41 @@ export class LoadData {
 
 
   static watchAll = async (req: Request, res: Response) => {
-    const userRepository = AppDataSource.getRepository(Organization);
+    // const userRepository = AppDataSource.getRepository(Organization);
 
-    let organizations: Organization[];
-    try {
-      organizations = await userRepository.find({
-        relations: ["tribes", "tribes.repositories"],
-      });
-    } catch (e) {
-      res.status(404).json({ message: "Something goes wrong!" });
-    }
+    // let organizations: Organization[];
+    // try {
+    //   organizations = await userRepository.find({
+    //     relations: ["tribes", "tribes.repositories"],
+    //   });
+    // } catch (e) {
+    //   res.status(404).json({ message: "Something goes wrong!" });
+    // }
 
-    console.log(organizations);
-    organizations.length > 0
-      ? res.json(organizations)
+    // console.log(organizations);
+    // organizations.length > 0
+    //   ? res.json(organizations)
+    //   : res.status(404).json({ message: "Not result" });
+
+
+      const metricRepositoriy = AppDataSource.getRepository(Metric);
+      let metrics: Metric[];
+      try {
+        metrics = await metricRepositoriy.find({
+          relations: ["repository", "repository.tribe","repository.tribe.organization"],
+        });
+      } catch (e) {
+        res.status(404).json({ message: "Something goes wrong!" });
+      }
+      metrics.length > 0
+      ? res.json(metrics)
       : res.status(404).json({ message: "Not result" });
+
+
+
+
+
+
   };
 }
 
