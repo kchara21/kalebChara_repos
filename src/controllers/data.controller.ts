@@ -139,7 +139,22 @@ export class DataController {
     return res.status(201).json({ message: "Metrics created" });
   };
 
+  static watchAll = async (req: Request, res: Response) => {
+   
+      const metricRepositoriy = AppDataSource.getRepository(Metric);
+      let metrics: Metric[];
+      try {
+        metrics = await metricRepositoriy.find({
+          relations: ["repository", "repository.tribe","repository.tribe.organization"],
+        });
+      } catch (e) {
+        res.status(404).json({ message: "Something goes wrong!" });
+      }
+      metrics.length > 0
+      ? res.json(metrics)
+      : res.status(404).json({ message: "Not result" });
 
+  };
 }
 
 export default DataController;

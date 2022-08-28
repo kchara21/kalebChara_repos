@@ -16,7 +16,7 @@ export class OrganizationController {
 
     organizations.length > 0
       ? res.json(organizations)
-      : res.status(404).json({ message: "Not result information" });
+      : res.status(404).json({ message: "Not result" });
   };
 
   static newOrganization = async (req: Request, res: Response) => {
@@ -38,7 +38,7 @@ export class OrganizationController {
         where: { name, status: 1 },
       });
       if (organizationExist.length > 0)
-        return res.json({ message: `Organization ${name} already exist!` });
+        return res.json({ message: `Organization ${name} already exist` });
 
       await organizationRepo.save(organization);
     } catch (e) {
@@ -64,7 +64,7 @@ export class OrganizationController {
       organization.name = name;
       organization.tribes = tribes;
     } catch (e) {
-      return res.status(404).json({ message: "Organization not found!" });
+      return res.status(404).json({ message: "Organization not found" });
     }
 
     //Validate dont exist errors
@@ -99,13 +99,13 @@ export class OrganizationController {
     }
 
     if (!organization)
-      return res.status(404).json({ message: "Organization not found!" });
+      return res.status(404).json({ message: "Organization not found" });
 
     try {
       await organizationRepo
-        .createQueryBuilder()
-        .update(Organization)
-        .set({ status: 0 })
+        .createQueryBuilder("repository")
+        .update({ status: 0 })
+        .where({ id_organization: id })
         .execute();
       return res
         .status(201)
