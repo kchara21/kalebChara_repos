@@ -9,7 +9,7 @@ export class Organization {
   @PrimaryGeneratedColumn()
   id_organization: number;
 
-  @OneToMany(()=>Tribe,tribe=>tribe.organization,{nullable:false})
+  @OneToMany(()=>Tribe,tribe=>tribe.organization,{onDelete:'CASCADE',onUpdate:'CASCADE',nullable:false})
   tribes:Tribe[];
   
 

@@ -9,7 +9,7 @@ export class Metric {
   @PrimaryGeneratedColumn()
   id_metric: number;
 
-  @OneToOne(()=>Repository)
+  @OneToOne(()=>Repository,{onDelete:'CASCADE',onUpdate:'CASCADE',nullable:false})
   @JoinColumn()
   repository:Repository
 

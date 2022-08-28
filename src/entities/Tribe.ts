@@ -10,10 +10,10 @@ export class Tribe {
   @PrimaryGeneratedColumn()
   id_tribe: number;
 
-  @ManyToOne(()=>Organization,organization=>organization.tribes,{onDelete:'CASCADE',nullable:false})
+  @ManyToOne(()=>Organization,organization=>organization.tribes,{onDelete:'CASCADE',onUpdate:'CASCADE',nullable:false})
   organization:Organization;
 
-  @OneToMany(()=>Repository,repository=>repository.tribe,{nullable:false})
+  @OneToMany(()=>Repository,repository=>repository.tribe,{onDelete:'CASCADE',onUpdate:'CASCADE',nullable:false})
   repositories:Repository[];
 
   @Column({nullable:false})
